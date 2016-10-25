@@ -20,8 +20,8 @@ object Main extends App {
       if (solution.length == n) {
         return solution
       }
-      //We're going to place a queen on row n, the options value will be the legal coordinates left to us, so we filter
-      // out all coordinates which are not on row n.
+      //We're going to place a queen on row n, the options value will be the legal coordinates on row n that we can use,
+      // so we filter out all coordinates which are not on row n.
       val options = board.filter(tup => tup._1 == solution.length)
       //As we're going to place a queen on row n, coordinates on row n will be illegal for future placements. We filter
       // out coordinates from the board which are on row n. We do it before the for loop in interests of efficiency.
@@ -29,7 +29,7 @@ object Main extends App {
       //Iterate through our possible placements on row n of the queen.
       for (coord <- options) {
         //Call our recursive function to see if a solution exists with this placement of the queen on row n. We also
-        // filter out the squares directly below and diagonal to our queen and append out queens coordinates to the solution.
+        // filter out the squares directly below and diagonal to our queen and append our queens coordinates to the solution.
         val nextRow = rowPosition(newBoard.filter(entry => entry._2 != coord._2 && !diagonalFilter(coord).contains(entry)), solution :+ coord._2)
         //If a solution doesn't exist -1 will be appended to the returned solution value, if the last value is positive we have a valid solution
         if (nextRow.last >= 0) {
@@ -37,7 +37,7 @@ object Main extends App {
         }
       }
       //If after iterating through each possible placement of the queen on row n we find no valid solutions we append -1
-      // to the solution variable we return to tell the n-1 th row that their exist no valid solutions and the queen on the n-1 th needs to be moved.
+      // to the solution variable we return to tell the n-1 th row that there exist no valid solutions and the queen on the n-1 th needs to be moved.
       return solution :+ -1
     }
 
